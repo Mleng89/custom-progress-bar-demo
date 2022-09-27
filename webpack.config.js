@@ -3,7 +3,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 // Instantiate the plugin.
-/* The `template` property defines the source of a template file 
+/* The `template` property defines the source of a template file
 that this plugin will use. We will create it later at the bottom. */
 const htmlPlugin = new HtmlWebPackPlugin({
     template: './src/index.html'
@@ -13,8 +13,8 @@ module.exports = {
     // Our application's entry point.
     entry: './src/index.tsx',
 
-    /*These rules define how to deal with files with given extensions. 
-    For example: .tsx files will be compiled with ts-loader, 
+    /*These rules define how to deal with files with given extensions.
+    For example: .tsx files will be compiled with ts-loader,
     a spcific loader for webpack that knows how to work with TypeScript files.*/
 
     module: {
@@ -23,13 +23,17 @@ module.exports = {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
             }
         ]
     },
 
     /* Telling webpack which extensions we are going to be using.*/
     resolve: {
-        extensions: ['.tsx', '.ts', '.js']
+        extensions: ['.tsx', '.ts', '.js', '.css']
     },
 
     /* This is what file name should be used for the result file, and where it should be palced.*/
