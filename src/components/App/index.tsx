@@ -1,6 +1,21 @@
 import './index.css';
 import React from 'react';
 import { useState } from 'react';
+interface ProgressProps {
+    done?: number | string;
+}
+const Progress: React.FC<ProgressProps> = ({ done }) => {
+    return (
+        <div className="progress-bar-outer">
+            <div
+                className="progress-bar-inner"
+                style={{ opacity: 1, width: `${done}%` }}
+            >
+                {done}%
+            </div>
+        </div>
+    );
+};
 const App = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>
         e.preventDefault();
@@ -9,9 +24,7 @@ const App = () => {
         <div>
             <div className="container">
                 <p>Progress Bar</p>
-                <div className="progress-bar-outer">
-                    <div className="progress-bar-inner"></div>
-                </div>
+                <Progress done="25" />
                 <form className="form-container" onSubmit={handleSubmit}>
                     <label> Document Name</label>
                     <input type="text" id="document-name" />
