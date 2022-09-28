@@ -1,6 +1,13 @@
+import React, { useState } from 'react';
+
+import Form from '../form';
+import { PROGRESS_DEFAULT } from '../../constants';
+
 import './index.css';
-import React from 'react';
-import { useState } from 'react';
+
+/**
+ * PROGRESS BAR COMPONENT
+ */
 interface ProgressProps {
     done?: number | string;
 }
@@ -11,36 +18,28 @@ const Progress: React.FC<ProgressProps> = ({ done }) => {
                 className="progress-bar-inner"
                 style={{ opacity: 1, width: `${done}%` }}
             >
-                {done}%
+                <p className="percentage">{done}%</p>
             </div>
         </div>
     );
 };
 const App = () => {
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>
-        e.preventDefault();
-    const [progress, setProgress] = useState(0);
+    const [formProgress, setFormProgress] = useState(PROGRESS_DEFAULT);
+
+    const handleFormProgress = (currentProgress: number) => {
+        // can add the following to protect against edge cases
+        // * don't set below 0 and above 100
+        // * const setValue = formProgress + currentProgress <= 0 :
+        // * formProgress + currentProgress <= 0 then 0
+        // * formProgress + currentProgress >= 100 then 100
+        // * else formProgress + currentProgress
+        setFormProgress(formProgress + currentProgress);
+    };
+
     return (
-        <div>
-            <div className="container">
-                <p>Progress Bar</p>
-                <Progress done="25" />
-                <form className="form-container" onSubmit={handleSubmit}>
-                    <label> Document Name</label>
-                    <input type="text" id="document-name" />
-                    <label> Document Type</label>
-                    <select>
-                        <option></option>
-                        <option value="word-document">Word Document</option>
-                        <option value="pdf">PDF</option>
-                    </select>
-                    <label>Email</label>
-                    <input type="email" id="email" />
-                    <div>
-                        <input type="submit" id="submit" value="Submit" />
-                    </div>
-                </form>
-            </div>
+        <div className="container">
+            <Progress done={formProgress} />
+            <Form handleFormProgress={handleFormProgress} />
         </div>
     );
 };
