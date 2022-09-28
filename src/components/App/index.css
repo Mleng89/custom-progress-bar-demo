@@ -26,6 +26,10 @@
     opacity: 0;
     transition: 1s ease 0.3s;
 }
-.form-container {
-    display: flex;
+/* TODO: Number percentage to be centered even when 0% */
+.percentage {
+    text-align: center;
 }
+/* .form-container {
+    display: flex;
+} */
